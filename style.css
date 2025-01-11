@@ -1,49 +1,92 @@
+/* Genel Ayarlar */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #ffe6f0; /* Hafif pembe arka plan */
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
+    background: linear-gradient(to bottom, #ffe6f0, #ffcce0);
+    color: #333;
     overflow-x: hidden;
 }
 
-.container {
+header {
     text-align: center;
+    padding: 50px 20px;
+    background-color: rgba(255, 204, 224, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #ff4081;
+    margin: 0;
+    animation: fadeIn 2s ease-in-out;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Galeri Bölümü */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
     padding: 20px;
 }
 
-h1 {
-    color: #ff4081;
-    animation: fadeIn 3s ease-in-out;
-}
-
-p {
-    color: #555;
-    font-size: 18px;
-}
-
-.photo {
-    width: 90%;
+.image {
     max-width: 300px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    animation: slideIn 2s ease-in-out;
+    text-align: center;
+    animation: slideUp 2s ease-in-out;
 }
 
-.gif {
+.image img {
     width: 100%;
-    max-width: 300px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
 }
 
+.image img:hover {
+    transform: scale(1.05);
+}
+
+.image p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #444;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 204, 224, 0.8);
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Animasyonlar */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-@keyframes slideIn {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
