@@ -15,3 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(image);
     });
 });
+
+document.querySelector('.btn-surprise').addEventListener('click', () => {
+    alert('Seni çok seviyorum elif naz 💕');
+});
