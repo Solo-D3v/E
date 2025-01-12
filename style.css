@@ -25,11 +25,14 @@ header {
 }
 
 header h1 {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Poppins', sans-serif; /* Daha sade ve modern bir yazı tipi */
     font-size: 3rem;
     color: #ff4081;
     margin: 0;
     animation: fadeIn 3s ease-in-out;
+    font-weight: bold; /* Daha belirgin ve etkileyici bir görünüm */
+    text-transform: uppercase; /* Tüm harfleri büyük yapar */
+    letter-spacing: 2px; /* Harfler arasında biraz boşluk */
 }
 
 header p {
