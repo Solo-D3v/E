@@ -72,20 +72,37 @@ header p {
 .image {
     max-width: 300px;
     text-align: center;
+    position: relative; /* Hover efektleri için */
     animation: slideUp 2s ease-in-out;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    border: 2px solid #ff4081;
 }
 
 .image img {
     width: 100%;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.image:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.image:hover::after {
+    border-color: #ff4081;
 }
 
 .image p {
