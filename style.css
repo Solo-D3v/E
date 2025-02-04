@@ -25,14 +25,14 @@ header {
 }
 
 header h1 {
-    font-family: 'Poppins', sans-serif; /* Daha sade ve modern bir yazı tipi */
+    font-family: 'Poppins', sans-serif;
     font-size: 3rem;
     color: #ff4081;
     margin: 0;
     animation: fadeIn 3s ease-in-out;
-    font-weight: bold; /* Daha belirgin ve etkileyici bir görünüm */
-    text-transform: uppercase; /* Tüm harfleri büyük yapar */
-    letter-spacing: 2px; /* Harfler arasında biraz boşluk */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 header p {
@@ -73,11 +73,13 @@ header p {
     max-width: 300px;
     text-align: center;
     animation: slideUp 2s ease-in-out;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .image:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid #ff4081;
 }
 
 .image img {
@@ -104,11 +106,12 @@ header p {
     font-size: 1rem;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-surprise:hover {
     background-color: #e6366e;
+    transform: scale(1.05);
 }
 
 /* Footer */
@@ -119,6 +122,7 @@ footer {
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
     font-size: 1rem;
     color: #333;
+    border-top: 2px solid #ff4081;
 }
 
 /* Animasyonlar */
