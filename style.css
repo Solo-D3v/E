@@ -3,11 +3,14 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #ffe6f0, #ffcce0, #ff99cc);
-    background-size: 300% 300%;
-    animation: bgAnimation 10s ease infinite;
+    /* Arka plan: Desen (eğer varsa) + Gradient animasyonu */
+    background: url('pembe-desen.png') repeat, linear-gradient(135deg, #ffe6f0, #ffcce0, #ff99cc); /* 'pembe-desen.png' yerine kendi dosyanızı koyun */
+    background-size: auto, 300% 300%; /* Desen boyutu auto, gradient 300% */
+    animation: bgAnimation 15s ease infinite; /* Animasyon süresi biraz uzatıldı */
     color: #333;
     overflow-x: hidden;
+    position: relative; /* Kalp ve kurdele konteynerleri için referans noktası */
+    min-height: 100vh; /* Sayfa yüksekliği en az viewport kadar olsun */
 }
 
 /* Arka Plan Hareketi */
@@ -17,39 +20,32 @@ body {
     100% { background-position: 0% 50%; }
 }
 
+/* Başlık Alanı */
 header {
     text-align: center;
     padding: 50px 20px;
-    background-color: rgba(255, 204, 224, 0.8);
+    background-color: rgba(255, 204, 224, 0.8); /* Hafif şeffaf pembe */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px; /* Galeri ile arasına boşluk eklendi */
 }
 
 header h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 3rem;
-    color: #ff4081;
+    font-family: 'Pacifico', cursive; /* Daha tatlı bir yazı tipi */
+    font-size: 4rem; /* Daha büyük */
+    color: #ff4081; /* Koyu pembe */
     margin: 0;
-    animation: fadeIn 3s ease-in-out;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-header p {
-    font-size: 1.2rem;
-    color: #555;
-}
-
-/* Dinamik Yazı */
-.animated-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Metin gölgesi */
+    font-weight: normal; /* Pacifico fontu bold desteklemez */
+    /* Animasyonlar */
     overflow: hidden;
     border-right: .15em solid #ff4081;
     white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: .15em;
-    animation: typing 4s steps(30, end), blink-caret 0.5s step-end infinite;
+    display: inline-block; /* typing efekti için önemli */
+    letter-spacing: .05em; /* Harf aralığı biraz azaltıldı */
+    animation: typing 4s steps(30, end) forwards, blink-caret 0.75s step-end infinite; /* Animasyonlar güncellendi */
 }
 
+/* Dinamik Yazı Efektleri (Başlık için) */
 @keyframes typing {
     from { width: 0; }
     to { width: 100%; }
@@ -60,73 +56,119 @@ header p {
     50% { border-color: #ff4081; }
 }
 
-/* Galeri */
+header p {
+    font-size: 1.3rem; /* Biraz büyütüldü */
+    color: #555;
+    margin-top: 10px;
+    animation: fadeIn 3s ease-in-out 1s forwards; /* Başlık yazıldıktan sonra çıksın (+1s gecikme) */
+    opacity: 0; /* Başlangıçta gizli */
+}
+
+/* Galeri Alanı */
 .gallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 30px; /* Boşluk biraz artırıldı */
     padding: 20px;
+    max-width: 1200px; /* Maksimum genişlik belirlendi */
+    margin: 0 auto; /* Ortalandı */
 }
 
 .image {
-    max-width: 300px;
+    width: 100%; /* Mobil görünüm için */
+    max-width: 300px; /* Masaüstü görünümde maksimum */
     text-align: center;
-    position: relative; /* Hover efektleri için */
-    animation: slideUp 2s ease-in-out;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    background-color: #fff; /* Fotoğraf arkasına beyaz fon */
+    border-radius: 15px;
+    overflow: hidden; /* İçeriğin taşmasını engelle */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Daha belirgin gölge */
+    transition: transform 0.5s ease, box-shadow 0.5s ease; /* Geçişler yumuşatıldı */
+    cursor: pointer; /* Tıklanabilir olduğunu belirtmek için */
+    /* slideUp animasyonu JS tarafından kontrol ediliyor */
+    opacity: 0; /* Başlangıçta gizli */
+    transform: translateY(30px); /* Başlangıç konumu */
+}
+
+.image:hover {
+     transform: translateY(-10px) scale(1.03); /* Hafif yukarı kalkma ve büyüme */
+     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25); /* Gölge artırıldı */
 }
 
 .image img {
     width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    height: 250px; /* Sabit yükseklik (isteğe bağlı) */
+    object-fit: cover; /* Resmi kutuya sığdırma */
+    display: block; /* Alttaki boşluğu kaldırır */
+    transition: transform 0.5s ease;
 }
 
 .image:hover img {
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1); /* Hover'da resmi biraz büyüt */
 }
 
-.image p {
-    margin-top: 10px;
+.image .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 64, 129, 0.9); /* Pembe şeffaf arka plan */
+    color: white;
+    padding: 10px 0; /* Üst/alt boşluk */
+    text-align: center;
     font-size: 1rem;
-    color: #444;
+    font-weight: 600;
+    transform: translateY(100%); /* Başlangıçta aşağıda gizli */
+    transition: transform 0.4s ease-out; /* Açıklama animasyonu */
+}
+
+.image:hover .caption {
+    transform: translateY(0); /* Hover'da yukarı kayarak görünür */
 }
 
 /* Sürpriz Butonu */
 .btn-surprise {
     display: block;
-    margin: 30px auto;
-    padding: 10px 20px;
+    margin: 50px auto; /* Daha fazla boşluk */
+    padding: 15px 30px; /* Daha büyük padding */
     background-color: #ff4081;
     color: white;
     border: none;
-    border-radius: 25px;
-    font-size: 1rem;
+    border-radius: 30px; /* Daha yuvarlak */
+    font-size: 1.1rem; /* Biraz büyük font */
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Gölge */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Poppins', sans-serif; /* Farklı font */
+    letter-spacing: 1px;
+    /* Sayfa açılış animasyonu */
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .btn-surprise:hover {
-    background-color: #e6366e;
-    transform: scale(1.05);
+    background-color: #e6366e; /* Daha koyu pembe */
+    transform: scale(1.1); /* Biraz büyüt */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Gölge artır */
 }
 
 /* Footer */
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 25px; /* Padding artırıldı */
     background-color: rgba(255, 204, 224, 0.8);
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
+    font-size: 1.1rem; /* Font büyütüldü */
     color: #333;
     border-top: 2px solid #ff4081;
+    margin-top: 40px; /* Üst boşluk */
+    /* Sayfa açılış animasyonu */
+     opacity: 0;
+     transform: translateY(30px);
 }
 
-/* Animasyonlar */
+/* Animasyonlar (Genel Sayfa Elementleri İçin) */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -136,3 +178,110 @@ footer {
     from { transform: translateY(30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
+@keyframes slideDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Sayfa Açılışında Elementlere Uygulanacak Animasyon Gecikmeleri (JS ile de kontrol edilebilir) */
+.fade-in {
+    animation: fadeIn 1.5s ease-in-out forwards;
+    opacity: 0; /* Başlangıçta gizli */
+}
+
+.slide-up {
+    /* Animasyon JS tarafından IntersectionObserver ile tetiklenecek */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out; /* Geçiş eklendi */
+}
+
+.slide-down {
+     animation: slideDown 1.5s ease-in-out forwards;
+     opacity: 0; /* Başlangıçta gizli */
+}
+
+
+/* --- Kurdele (🎀) Animasyonları --- */
+.ribbon-container {
+    position: fixed; /* Sabit durur */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Üzerindeki elementlerin tıklanmasını engellemez */
+    overflow: hidden; /* Taşmaları gizle */
+    z-index: 10; /* Diğer elementlerin arkasında veya önünde (isteğe bağlı) */
+}
+
+.ribbon {
+    position: absolute;
+    display: block;
+    font-size: 2rem; /* Emoji boyutu */
+    animation: floatAndRotate 15s infinite linear; /* Hareket ve dönüş animasyonu */
+    opacity: 0.8; /* Hafif şeffaf */
+    user-select: none; /* Seçilemez yap */
+}
+
+@keyframes floatAndRotate {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.8;
+    }
+    25% {
+         transform: translate(10vw, 20vh) rotate(45deg);
+    }
+     50% {
+         transform: translate(30vw, 50vh) rotate(90deg);
+         opacity: 0.6;
+    }
+     75% {
+         transform: translate(50vw, 80vh) rotate(135deg);
+    }
+    100% {
+        transform: translate(70vw, 100vh) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+
+/* --- Kalp (💕) Yağmuru Animasyonları --- */
+.heart-container {
+    position: fixed; /* Sabit durur */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Üzerindeki elementlerin tıklanmasını engellemez */
+    overflow: hidden; /* Taşmaları gizle */
+    z-index: 100; /* En üstte görünür */
+}
+
+.heart {
+    position: absolute;
+    display: block;
+    color: #ff69b4; /* Sıcak pembe kalp rengi */
+    font-size: 1.5rem; /* Kalp boyutu */
+    transform: translateY(0); /* Başlangıçta yukarıda */
+    animation: heartFall linear infinite; /* Kalp düşme animasyonu */
+    user-select: none; /* Seçilemez yap */
+}
+
+@keyframes heartFall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+         opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
