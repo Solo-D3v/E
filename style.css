@@ -3,10 +3,12 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    /* Arka plan: Desen (eğer varsa) + Gradient animasyonu */
-    background: url('pembe-desen.png') repeat, linear-gradient(135deg, #ffe6f0, #ffcce0, #ff99cc); /* 'pembe-desen.png' yerine kendi dosyanızı koyun */
-    background-size: auto, 300% 300%; /* Desen boyutu auto, gradient 300% */
-    animation: bgAnimation 15s ease infinite; /* Animasyon süresi biraz uzatıldı */
+    /* Arka plan: Yüklenen görsel (tekrar etmeyecek, ortalanacak ve kaplayacak) + Gradient animasyonu (ikinci katman) */
+    /* 'image.png' yerine kendi dosyanızın adını kullanın */
+    background: url('image.png') no-repeat center center / cover,
+                linear-gradient(135deg, #ffe6f0, #ffcce0, #ff99cc);
+    background-size: cover, 300% 300%; /* İlk katman (görsel) cover, İkinci katman (gradient) 300% */
+    animation: bgAnimation 15s ease infinite; /* Gradient animasyonu devam etsin */
     color: #333;
     overflow-x: hidden;
     position: relative; /* Kalp ve kurdele konteynerleri için referans noktası */
@@ -15,10 +17,12 @@ body {
 
 /* Arka Plan Hareketi */
 @keyframes bgAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% { background-position: 0% 50%, 0% 50%; } /* İki arka plan için pozisyon */
+    50% { background-position: 0% 50%, 100% 50%; }
+    100% { background-position: 0% 50%, 0% 50%; }
 }
+/* Dikkat: background-position animasyonu iki arka plan katmanı için güncellendi */
+
 
 /* Başlık Alanı */
 header {
@@ -219,11 +223,13 @@ footer {
     position: absolute;
     display: block;
     font-size: 2rem; /* Emoji boyutu */
-    animation: floatAndRotate 15s infinite linear; /* Hareket ve dönüş animasyonu */
+    /* Animasyonu JS belirleyecek */
     opacity: 0.8; /* Hafif şeffaf */
     user-select: none; /* Seçilemez yap */
+    /* Başlangıç pozisyonu ve animasyon JS tarafından ayarlanacak */
 }
 
+/* Kurdele hareket animasyonu (JS'ten gelecek süre ve gecikme ile çalışacak) */
 @keyframes floatAndRotate {
     0% {
         transform: translate(0, 0) rotate(0deg);
@@ -262,12 +268,12 @@ footer {
     position: absolute;
     display: block;
     color: #ff69b4; /* Sıcak pembe kalp rengi */
-    font-size: 1.5rem; /* Kalp boyutu */
+    /* Boyut, konum ve animasyon JS tarafından ayarlanacak */
     transform: translateY(0); /* Başlangıçta yukarıda */
-    animation: heartFall linear infinite; /* Kalp düşme animasyonu */
     user-select: none; /* Seçilemez yap */
 }
 
+/* Kalp düşme animasyonu (Artık sonsuz değil, tek seferlik) */
 @keyframes heartFall {
     0% {
         transform: translateY(-10vh) rotate(0deg);
@@ -284,4 +290,3 @@ footer {
         opacity: 0;
     }
 }
-
