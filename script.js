@@ -33,29 +33,28 @@ document.addEventListener("DOMContentLoaded", () => {
             ribbon.classList.add('ribbon');
             ribbon.textContent = '🎀'; // Kurdele emojisi
 
-            // Rastgele başlangıç konumu
+            // Rastgele başlangıç konumu ve animasyon süresi/gecikmesi
             const startX = Math.random() * window.innerWidth;
             const startY = -50; // Ekranın üstünden başlasın
             ribbon.style.left = `${startX}px`;
-            ribbon.style.top = `${startY}px`;
+            ribbon.style.top = `${startY}px`; // Başlangıç top değeri
 
             // Rastgele boyut (isteğe bağlı)
             const randomSize = 1.5 + Math.random() * 1.5; // 1.5rem ile 3rem arası
              ribbon.style.fontSize = `${randomSize}rem`;
 
-
-            // Rastgele animasyon süresi ve gecikme
-            const randomDuration = 10 + Math.random() * 10; // 10s ile 20s arası
-            const randomDelay = Math.random() * 10; // 0s ile 10s arası gecikme
+            // Rastgele animasyon süresi ve gecikme (burada infinite olarak kalabilir, sürekli düşmeleri isteniyor)
+            const randomDuration = 15 + Math.random() * 10; // 15s ile 25s arası
+            const randomDelay = Math.random() * 15; // 0s ile 15s arası gecikme
+            ribbon.style.animationName = 'floatAndRotate'; // Hangi animasyonu kullanacağı
             ribbon.style.animationDuration = `${randomDuration}s`;
             ribbon.style.animationDelay = `${randomDelay}s`;
-
-             // Farklı hareketler için animasyon ismini değiştirme (isteğe bağlı, CSS'te farklı keyframeler tanımlayarak)
-             // Şimdilik tek keyframe kullanıldı
+            ribbon.style.animationIterationCount = 'infinite'; // Sürekli tekrar etsin
+            ribbon.style.animationTimingFunction = 'linear'; // Sabit hız
 
             ribbonContainer.appendChild(ribbon);
 
-             // Animasyon bitince elementi temizle (sürekli tekrarladığı için gerekli olmayabilir ama tek seferlik animasyonlar için iyidir)
+            // Animasyon bitince elementi temizle (sürekli tekrarladığı için gerekli değil)
              // ribbon.addEventListener('animationend', () => {
              //     ribbon.remove();
              // });
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const heartContainer = document.querySelector('.heart-container');
 
     function kalpYagmuruBaslat() {
-        const numberOfHearts = 80; // Yağacak kalp sayısı
+        const numberOfHearts = 80; // Yağacak kalp sayısı (Bir seferde bu kadar düşecek)
         for (let i = 0; i < numberOfHearts; i++) {
             const heart = document.createElement('span');
             heart.classList.add('heart');
@@ -85,16 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const randomSize = 1 + Math.random() * 1; // 1rem ile 2rem arası
             heart.style.fontSize = `${randomSize}rem`;
 
-
-            // Rastgele animasyon süresi ve gecikme
-            const randomDuration = 3 + Math.random() * 4; // 3s ile 7s arası
-            const randomDelay = Math.random() * 3; // 0s ile 3s arası gecikme
+            // Rastgele animasyon süresi ve gecikme (tek seferlik animasyon için süre kısa olabilir)
+            const randomDuration = 4 + Math.random() * 3; // 4s ile 7s arası düşme süresi
+            const randomDelay = Math.random() * 1; // 0s ile 1s arası gecikme (aynı anda düşmesinler)
+            heart.style.animationName = 'heartFall'; // Hangi animasyonu kullanacağı
             heart.style.animationDuration = `${randomDuration}s`;
             heart.style.animationDelay = `${randomDelay}s`;
+            heart.style.animationTimingFunction = 'linear'; // Sabit düşme hızı
+            heart.style.animationFillMode = 'forwards'; // Animasyon bitince son halinde kalsın (opacity: 0)
+            heart.style.animationIterationCount = '1'; // Yalnızca bir kez çalışsın
+
 
             heartContainer.appendChild(heart);
 
-            // Animasyon bitince elementi temizle
+            // Animasyon bitince elementi temizle (önemli, biriken kalpleri siler)
              heart.addEventListener('animationend', () => {
                  heart.remove();
              });
@@ -104,22 +107,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Sürpriz Butonuna Tıklama Olayı ---
     const surpriseButton = document.querySelector('.btn-surprise');
+    let isAnimatingHeartRain = false; // Animasyonun devam edip etmediğini kontrol etmek için
 
     surpriseButton.addEventListener('click', () => {
-        // Alert yerine kalp yağmurunu başlat
-        kalpYagmuruBaslat();
+        // Eğer animasyon devam etmiyorsa başlat
+        if (!isAnimatingHeartRain) {
+             isAnimatingHeartRain = true; // Animasyon başladı olarak işaretle
+             kalpYagmuruBaslat();
 
-        // Butonun renk değiştirme efekti (isteğe bağlı, silebilirsiniz)
-        surpriseButton.style.backgroundColor = '#e6366e';
-        setTimeout(() => {
-            surpriseButton.style.backgroundColor = '#ff4081';
-        }, 500);
+             // Belirli bir süre sonra animasyonun bittiğini işaretle (Son kalbin süresinden biraz fazla)
+             // En uzun kalp animasyon süresine göre ayarlanmalı
+             const longestHeartDuration = 7 + 1; // Max duration + Max delay
+             setTimeout(() => {
+                 isAnimatingHeartRain = false;
+             }, longestHeartDuration * 1000); // Milisaniyeye çevir
+
+
+            // Butonun renk değiştirme efekti (isteğe bağlı, silebilirsiniz)
+            surpriseButton.style.backgroundColor = '#e6366e';
+            setTimeout(() => {
+                surpriseButton.style.backgroundColor = '#ff4081';
+            }, 500);
+        }
     });
 
-     // --- Sayfa Açılışında Header ve Footer Animasyonu (CSS tarafından kontrol ediliyor, JS sadece tetikleyici olarak kullanılabilir ama bu haliyle de çalışır) ---
-     // Eğer JS ile kontrol etmek isterseniz şu şekilde yapabilirsiniz:
-     // document.querySelector('header').style.animationDelay = '0.5s'; // CSS'teki gecikmeyi ezebilir veya ekleyebilir
-     // document.querySelector('header').style.animationPlayState = 'running'; // Duraklatılmışsa başlat
-
-     // Şu anki CSS'te direkt animasyon tanımlı olduğu için JS'e gerek yok bu kısımlar için.
 });
