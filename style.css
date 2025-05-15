@@ -3,34 +3,40 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    /* Arka plan: Yüklenen görsel (tekrar etmeyecek, ortalanacak ve kaplayacak) + Gradient animasyonu (ikinci katman) */
+    /* Arka plan: Yüklenen görsel (tek katman, tekrar etmeyecek, ortalanacak ve kaplayacak) */
     /* 'image.png' yerine kendi dosyanızın adını kullanın */
-    background: url('image.png') no-repeat center center / cover,
-                linear-gradient(135deg, #ffe6f0, #ffcce0, #ff99cc);
-    background-size: cover, 300% 300%; /* İlk katman (görsel) cover, İkinci katman (gradient) 300% */
-    animation: bgAnimation 15s ease infinite; /* Gradient animasyonu devam etsin */
+    background: url('image.png') no-repeat center center fixed; /* 'fixed' kaydırmada sabit kalmasını sağlar */
+    background-size: cover; /* Tüm alanı kapla */
+    /* Arka plan animasyonu artık sadece görsel üzerinde çalışıyorsa anlamlı değil, bu yüzden kaldırıldı veya yorum satırı yapıldı */
+    /* animation: bgAnimation 15s ease infinite; */
     color: #333;
     overflow-x: hidden;
     position: relative; /* Kalp ve kurdele konteynerleri için referans noktası */
     min-height: 100vh; /* Sayfa yüksekliği en az viewport kadar olsun */
 }
 
-/* Arka Plan Hareketi */
+/* Arka Plan Hareketi (Artık sadece tek katman için) */
+/* Eğer görsel üzerinde de hafif bir hareket istenirse bu animasyon güncellenebilir */
+/* Şu anki halinde sadece gradienti hareket ettiriyordu, tek görselde bir işlevi yok */
+/*
 @keyframes bgAnimation {
-    0% { background-position: 0% 50%, 0% 50%; } /* İki arka plan için pozisyon */
-    50% { background-position: 0% 50%, 100% 50%; }
-    100% { background-position: 0% 50%, 0% 50%; }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
-/* Dikkat: background-position animasyonu iki arka plan katmanı için güncellendi */
+*/
 
 
 /* Başlık Alanı */
 header {
     text-align: center;
     padding: 50px 20px;
-    background-color: rgba(255, 204, 224, 0.8); /* Hafif şeffaf pembe */
+    /* Header arka plan rengini tam opak yapalım, böylece altındaki arka plandan etkilenmez */
+    background-color: #ffe6f0; /* rgba(255, 230, 240, 1) tam opak hali */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px; /* Galeri ile arasına boşluk eklendi */
+    position: relative; /* Z-index için gerekebilir */
+    z-index: 1; /* Diğer elementlerin önüne al */
 }
 
 header h1 {
@@ -77,7 +83,13 @@ header p {
     padding: 20px;
     max-width: 1200px; /* Maksimum genişlik belirlendi */
     margin: 0 auto; /* Ortalandı */
+    position: relative; /* Z-index için gerekebilir */
+    z-index: 1; /* Diğer elementlerin önüne al */
+    background-color: rgba(255, 255, 255, 0.7); /* Galeri alanına hafif şeffaf beyaz fon ekleyelim, arka planı tamamen kapatmasın ama görsellerin altını düzleştirsin */
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Gölgeler eklendi */
 }
+
 
 .image {
     width: 100%; /* Mobil görünüm için */
@@ -149,6 +161,8 @@ header p {
     /* Sayfa açılış animasyonu */
     opacity: 0;
     transform: translateY(30px);
+    position: relative; /* Z-index için gerekebilir */
+    z-index: 1; /* Diğer elementlerin önüne al */
 }
 
 .btn-surprise:hover {
@@ -161,7 +175,8 @@ header p {
 footer {
     text-align: center;
     padding: 25px; /* Padding artırıldı */
-    background-color: rgba(255, 204, 224, 0.8);
+    /* Footer arka plan rengini tam opak yapalım */
+    background-color: #ffe6f0; /* rgba(255, 230, 240, 1) tam opak hali */
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
     font-size: 1.1rem; /* Font büyütüldü */
     color: #333;
@@ -170,6 +185,8 @@ footer {
     /* Sayfa açılış animasyonu */
      opacity: 0;
      transform: translateY(30px);
+     position: relative; /* Z-index için gerekebilir */
+     z-index: 1; /* Diğer elementlerin önüne al */
 }
 
 /* Animasyonlar (Genel Sayfa Elementleri İçin) */
