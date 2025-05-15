@@ -10,14 +10,17 @@ body {
     /* Arka plan animasyonu artık sadece görsel üzerinde çalışıyorsa anlamlı değil, bu yüzden kaldırıldı veya yorum satırı yapıldı */
     /* animation: bgAnimation 15s ease infinite; */
     color: #333;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */ /* X ekseni taşmasını kaldırmak bazen sorun yaratabilir, sildim */
     position: relative; /* Kalp ve kurdele konteynerleri için referans noktası */
     min-height: 100vh; /* Sayfa yüksekliği en az viewport kadar olsun */
+
+    /* --- Flexbox Ayarları Başlangıç --- */
+    display: flex; /* Body'yi flex container yap */
+    flex-direction: column; /* İçindeki öğeleri (header, main, footer) dikey sırala */
+    /* --- Flexbox Ayarları Bitiş --- */
 }
 
-/* Arka Plan Hareketi (Artık sadece tek katman için) */
-/* Eğer görsel üzerinde de hafif bir hareket istenirse bu animasyon güncellenebilir */
-/* Şu anki halinde sadece gradienti hareket ettiriyordu, tek görselde bir işlevi yok */
+/* Arka Plan Hareketi (Artık tek katman ve fixed olduğu için bu animasyon çalışmayacak) */
 /*
 @keyframes bgAnimation {
     0% { background-position: 0% 50%; }
@@ -26,8 +29,7 @@ body {
 }
 */
 
-
-/* Başlık Alanı */
+/* Header, Main, Footer gibi ana bölümlerin Flexbox içinde nasıl davranacağını ayarlayalım */
 header {
     text-align: center;
     padding: 50px 20px;
@@ -37,6 +39,7 @@ header {
     margin-bottom: 30px; /* Galeri ile arasına boşluk eklendi */
     position: relative; /* Z-index için gerekebilir */
     z-index: 1; /* Diğer elementlerin önüne al */
+    flex-shrink: 0; /* Header'ın küçülmesini engelle */
 }
 
 header h1 {
@@ -74,22 +77,42 @@ header p {
     opacity: 0; /* Başlangıçta gizli */
 }
 
-/* Galeri Alanı */
+/* Main İçerik Alanı */
+main {
+    /* --- Flexbox Ayarları Başlangıç --- */
+    flex-grow: 1; /* Kalan boşluğu doldurmasını sağla */
+    /* --- Flexbox Ayarları Bitiş --- */
+
+    padding: 20px; /* Galeri ve buton için genel padding */
+    /* max-width: 1200px; */ /* Main elementine max-width vermek yerine galerinin kendisine verdik */
+    margin: 0 auto; /* Main elementini de ortalayabiliriz */
+    width: 100%; /* Genişliği ayarla */
+    box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağla */
+
+    position: relative; /* Z-index için gerekebilir */
+    z-index: 1; /* Diğer elementlerin önüne al */
+    /* background-color: rgba(255, 255, 255, 0.7); */ /* Galeri alanına verdiğimiz için burada silebiliriz veya tutabiliriz */
+    /* border-radius: 15px; */ /* Galeriye uygulandı */
+    /* box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); */ /* Galeriye uygulandı */
+}
+
+
+/* Galeri Alanı (Main içinde) */
 .gallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px; /* Boşluk biraz artırıldı */
-    padding: 20px;
+    /* padding: 20px; */ /* Main'e taşıdık */
     max-width: 1200px; /* Maksimum genişlik belirlendi */
     margin: 0 auto; /* Ortalandı */
-    position: relative; /* Z-index için gerekebilir */
-    z-index: 1; /* Diğer elementlerin önüne al */
     background-color: rgba(255, 255, 255, 0.7); /* Galeri alanına hafif şeffaf beyaz fon ekleyelim, arka planı tamamen kapatmasın ama görsellerin altını düzleştirsin */
     border-radius: 15px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Gölgeler eklendi */
-}
+    padding: 20px; /* Galeri içeriği için padding */
+    box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağla */
 
+}
 
 .image {
     width: 100%; /* Mobil görünüm için */
@@ -143,7 +166,7 @@ header p {
     transform: translateY(0); /* Hover'da yukarı kayarak görünür */
 }
 
-/* Sürpriz Butonu */
+/* Sürpriz Butonu (Main içinde) */
 .btn-surprise {
     display: block;
     margin: 50px auto; /* Daha fazla boşluk */
@@ -187,6 +210,7 @@ footer {
      transform: translateY(30px);
      position: relative; /* Z-index için gerekebilir */
      z-index: 1; /* Diğer elementlerin önüne al */
+     flex-shrink: 0; /* Footer'ın küçülmesini engelle */
 }
 
 /* Animasyonlar (Genel Sayfa Elementleri İçin) */
@@ -307,3 +331,4 @@ footer {
         opacity: 0;
     }
 }
+
